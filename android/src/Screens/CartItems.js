@@ -12,106 +12,185 @@ export default class CartItems extends Component {
         super(props);
         this.state = ({
             totalPrice: 0,
-            countedItem: 0,
+            countedItem: 1,
+            isDisable:false
         })
 
     }
-  
-    // componentDidMount() {
-    //     const { items} = this.props.route.params;
-    //     let completePrice = items[indexOfItem].shoesPrice * itemCount;
-    //     this.setState({
-    //         totalPrice: completePrice,
-    //         countedItem:itemCount
-    //     })
-    // }
+
+    componentDidMount() {
+
+        const { items } = this.props.route.params
+        
+        let newItems = [...items];
+        let newTotal = 0;
+
+       for(let i in newItems){
+           newTotal+= newItems[i].shoesPrice*newItems[i].quantity
+       }
+        this.setState({
+            totalPrice: newTotal,
+            
+        })
+
+    }
 
     _onSubButton = (id) => {
 
-        const { items} = this.props.route.params;
-        let newItems=[...items];
-         let itemIndex = newItems.findIndex((item) => item.id === id);
-        let newQauntity= newItems[itemIndex];
-        newQauntity.quantity-=1;
-        this.setState({
-            items:newQauntity
-        })
+        const { items } = this.props.route.params;
+        let newItems = [...items];
+        let newTotal=0;
+        let itemIndex = newItems.findIndex((item) => item.id === id);
+        let newQauntity = newItems[itemIndex];
+        newQauntity.quantity -= 1;
+
+        // for(let i in newItems){
+        //     newTotal-=newItems[i].shoesPrice*newItems[i].quantity
+        // }
+       
+        if(newQauntity.quantity===0){
+            this.setState({
+                items: newQauntity,
+                totalPrice:newTotal,
+                isDisable:true
+    
+            })
+        }
+        else{
+            this.setState({
+                items: newQauntity,
+                totalPrice:newTotal,
+                isDisable:false
+    
+            })
+        }
+        
+  
 
     }
 
     _onAddButton = (id) => {
-        const { items} = this.props.route.params;
-        let newItems=[...items];
-         let itemIndex = newItems.findIndex((item) => item.id === id);
-        let newQauntity= newItems[itemIndex];
-        newQauntity.quantity+=1;
+        const { items } = this.props.route.params;
+        const { totalPrice } = this.state;
+
+        let newTotal=0;
+        let newItems = [...items];
+
+        let itemIndex = newItems.findIndex((item) => item.id === id);
+        let newQauntity = newItems[itemIndex];
+        newQauntity.quantity += 1;
+
+        
+
+        for(let i in newItems){
+            newTotal+=newItems[i].shoesPrice*newItems[i].quantity
+        }
         this.setState({
-            items:newQauntity
+            items: newQauntity,
+            totalPrice:newTotal, 
+            isDisable:false
         })
     }
 
-    onbackPress=()=>{
+    onbackPress = () => {
         const { navigation } = this.props;
         navigation.navigate(navigationStrings.SHOESLIST);
     }
 
-    _renderItem = ({item}) => { 
-        return(
-            <View style={{backgroundColor:"white"}}>
-           <View style={styles.productView}>
-                 <Image source={{ uri: item.shoesImage }} style={styles.productImage} resizeMode="contain" />
-                 <View style={styles.productDetails}>
-                     <Text style={styles.descText}>{item.shortDescription}</Text>
-                     <Text style={styles.priceColor}>₹ {item.shoesPrice}</Text>
-                     <Text style={styles.inStockText}>In stock</Text>
-                     <View style={styles.sellerNameView}><Text style={styles.soldByText}>Sold by </Text><Text style={styles.sellerName}>WEBOASIS GARMENT PVT. LTD.</Text></View>
-                 </View>
-             </View>
- 
-               <View style={styles.buttonsView}>
-                 <View style={styles.itemAddSub}>
-                     <TouchableOpacity style={styles.subCount} onPress={()=>this._onSubButton(item.id)}>
-                         <Text>
- 
-                             -
-                         </Text>
-                     </TouchableOpacity>
-                     <Text style={styles.totalCount}>
-                         {item.quantity}
-                     </Text>
-                     <TouchableOpacity style={styles.addCount} onPress={()=>this._onAddButton(item.id)}>
-                         <Text>
-                             +
-                         </Text>
-                     </TouchableOpacity>
-                 </View>
-             </View> 
-         </View>
-         
+    _renderItem = ({ item }) => {
+        const {isDisable}=this.state;
+        return (
+            <View style={{ backgroundColor: "white", marginVertical: 3 }}>
+                <View style={styles.productView}>
+                    <Image source={{ uri: item.shoesImage }} style={styles.productImage} resizeMode="contain" />
+                    <View style={styles.productDetails}>
+                        <Text style={styles.descText}>{item.shortDescription}</Text>
+                        <Text style={styles.priceColor}>₹ {item.shoesPrice}</Text>
+                        <Text style={styles.inStockText}>In stock</Text>
+                        <View style={styles.sellerNameView}><Text style={styles.soldByText}>Sold by </Text><Text style={styles.sellerName}>WEBOASIS GARMENT PVT. LTD.</Text></View>
+                    </View>
+                </View>
+
+                <View style={styles.buttonsView}>
+                    <View style={styles.itemAddSub}>
+                        <TouchableOpacity disabled={isDisable} style={styles.subCount} onPress={() => this._onSubButton(item.id)}>
+                            <Text>
+
+                                -
+                      </Text>
+                        </TouchableOpacity>
+                        <Text style={styles.totalCount}>
+                            {item.quantity}
+                        </Text>
+                        <TouchableOpacity style={styles.addCount} onPress={() => this._onAddButton(item.id)}>
+                            <Text>
+                                +
+                      </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
         )
-  }
+
+
+
+
+        //     {item=""?(          <View style={{backgroundColor:"white"}}>
+        //     <View style={styles.productView}>
+        //           <Image source={{ uri: item.shoesImage }} style={styles.productImage} resizeMode="contain" />
+        //           <View style={styles.productDetails}>
+        //               <Text style={styles.descText}>{item.shortDescription}</Text>
+        //               <Text style={styles.priceColor}>₹ {item.shoesPrice}</Text>
+        //               <Text style={styles.inStockText}>In stock</Text>
+        //               <View style={styles.sellerNameView}><Text style={styles.soldByText}>Sold by </Text><Text style={styles.sellerName}>WEBOASIS GARMENT PVT. LTD.</Text></View>
+        //           </View>
+        //       </View>
+
+        //         <View style={styles.buttonsView}>
+        //           <View style={styles.itemAddSub}>
+        //               <TouchableOpacity style={styles.subCount} onPress={()=>this._onSubButton(item.id)}>
+        //                   <Text>
+
+        //                       -
+        //                   </Text>
+        //               </TouchableOpacity>
+        //               <Text style={styles.totalCount}>
+        //                   {item.quantity}
+        //               </Text>
+        //               <TouchableOpacity style={styles.addCount} onPress={()=>this._onAddButton(item.id)}>
+        //                   <Text>
+        //                       +
+        //                   </Text>
+        //               </TouchableOpacity>
+        //           </View>
+        //       </View> 
+        //   </View>):(<View style={{flex:1, backgroundColor:"green", alignItems:"center",justifyContent:"center"}}>
+        //         <Text>Empty cart</Text></View>)}
+
+
+    }
 
     render() {
         const { items } = this.props.route.params;
         const { totalPrice, countedItem } = this.state;
         return (
             <View style={styles.mainView}>
-            <Header onbackPress={this.onbackPress} itemCount={countedItem}/>
-            <View style={styles.subView}>
-                 <View style={styles.itemPriceCount}>
-                     <Text>Subtotal ({countedItem} items): </Text>
-                     <Text style={styles.priceColor}>₹ {totalPrice}</Text>
-                 </View>
-             </View>
-             <TouchableOpacity style={styles.proccedToBuyButton}>
-                 <Text>Proceed to Buy</Text>
-             </TouchableOpacity>
-            <FlatList 
-            data={items}
-            keyExtractor={(item)=> item.id.toString()}
-            renderItem={(item) => this._renderItem(item)}
-           />
-        </View>
+                <Header onbackPress={this.onbackPress} />
+                <View style={styles.subView}>
+                    <View style={styles.itemPriceCount}>
+                        <Text>Subtotal: </Text>
+                        <Text style={styles.priceColor}>₹ {totalPrice}</Text>
+                    </View>
+                </View>
+                <TouchableOpacity style={styles.proccedToBuyButton}>
+                    <Text>Proceed to Buy</Text>
+                </TouchableOpacity>
+                <FlatList
+                    data={items}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={(item) => this._renderItem(item)}
+                />
+            </View>
         )
     }
 }
@@ -161,6 +240,7 @@ const styles = StyleSheet.create({
     },
     sellerNameView: {
         flexDirection: 'row',
+        fontSize: 14
 
     },
     inStockText: {

@@ -5,7 +5,7 @@ export default {
     LANDING_PAGE:'landingPage',
     MAIN_PAGE:'mainPage',
     HOME:'home',
-    SETTING:'setting',
+    PROFILE:'profile',
     SHOES:'shoes',
     CARTITEMS:'cartItems',
     SHOESLIST:'shoesList'

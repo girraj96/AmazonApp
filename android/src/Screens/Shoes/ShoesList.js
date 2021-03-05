@@ -11,28 +11,28 @@ export default class ShoesList extends Component {
                 id: 1,
                 shoesName: "T-Rock",
                 shortDescription: "Men's Running Shoes",
-                shoesPrice: 315,
+                shoesPrice: 200,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/716WSjKMcCL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 2,
                 shoesName: "Maddy",
                 shortDescription: "Daily Running Shoes",
-                shoesPrice: 649,
+                shoesPrice: 300,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/51xlU4uI+GL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 3,
                 shoesName: "Ethics",
                 shortDescription: "Boys Shoes",
-                shoesPrice: 899,
+                shoesPrice: 400,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/61j6rA7eweL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 4,
@@ -41,7 +41,7 @@ export default class ShoesList extends Component {
                 shoesPrice: 784,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/61gu9eTzeGL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 5,
@@ -50,7 +50,7 @@ export default class ShoesList extends Component {
                 shoesPrice: 699,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/81OlX3C3isL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 6,
@@ -59,7 +59,7 @@ export default class ShoesList extends Component {
                 shoesPrice: 563,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/81Agwfg6ssL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 7,
@@ -68,7 +68,7 @@ export default class ShoesList extends Component {
                 shoesPrice: 1047,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/81PSjLaLYsL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
             {
                 id: 8,
@@ -77,7 +77,7 @@ export default class ShoesList extends Component {
                 shoesPrice: 987,
                 shoesImage: "https://images-na.ssl-images-amazon.com/images/I/71Hrx-Tu8gL._AC_UL320_.jpg",
                 isPreviousClicked:true,
-                quantity:1,
+                quantity:0,
             },
         ],
         cartItemCount:0,
@@ -98,23 +98,29 @@ export default class ShoesList extends Component {
     }
 
     onBuyItemPress = (id) => {
-        const { shoesLists, cartItemCount,newshoesAry} = this.state;
+
+        const { shoesLists,newshoesAry,cartItemCount} = this.state;
         let newshoesList = [...shoesLists];
         let itemIndex = newshoesList.findIndex((item) => item.id === id);
 
-        if (!newshoesAry.includes(newshoesList[itemIndex])) {
-            let newr=[...newshoesAry,newshoesList[itemIndex]];
+        
+
+     if (!newshoesAry.includes(newshoesList[itemIndex])) {
+        let newr=[...newshoesAry,newshoesList[itemIndex]];
+
+           newshoesList[itemIndex].quantity+=1;
             this.setState({
                 cartItemCount:cartItemCount+1,
                 newshoesAry:newr,
+                shoesLists:newshoesList,
             })
-        }
+       }
     }
 
     _onCartClick=()=>{ 
-        const {newshoesAry,cartCountAry}=this.state;
+        const {newshoesAry}=this.state;
         const { navigation } = this.props;
-        navigation.navigate(navigationStrings.CARTITEMS,{items:newshoesAry,cartCountAry:cartCountAry});
+        navigation.navigate(navigationStrings.CARTITEMS,{items:newshoesAry});
     }
 
     onItemsPress=(id)=>{
@@ -128,6 +134,7 @@ export default class ShoesList extends Component {
 
     render() {
         const { shoesLists, isCartVisible, cartItemCount } = this.state;
+        
         return (
             <View style={{ flex: 1, backgroundColor: "white" }}>
                 <Header onbackPress={this.onbackPress} isCartVisible={isCartVisible} itemCount={cartItemCount} _onCartClick={this._onCartClick}/>

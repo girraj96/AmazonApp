@@ -17,6 +17,13 @@ export default {
     appliances_icon:require('./images/appliances.png'),
     electronics_icon:require('./images/electronics.png'),
     right_icon:require('./images/right_icon.png'),
-    back_icon:require('./images/back_arrow.png')
+    back_icon:require('./images/back_arrow.png'),
+    gallary_icon:require('./images/gallary_icon.png'),
+    camera:require('./images/camera_icon.png'),
+    system_camera:require('./images/camera-icon.png'),
+    system_files:require('./images/files-icon.png'),
+
+
+    
 
 }

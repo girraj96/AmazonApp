@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, StatusBar, TextInput, Image } from "react-nativ
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ImagePath from "../assests/imagePath"
 
-export default function Header({openDrawer,itemCount,addProductArray,_onCartClick,isDrawerOpen,onbackPress,isCartVisible}) {
+export default function Header({openDrawer,itemCount,addProductArray,_onCartClick,onbackPress,isDrawerOpen,isCartVisible}) {
 
     
     return (
