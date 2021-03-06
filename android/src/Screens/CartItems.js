@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, Image, TouchableOpacity, Text, StyleSheet,Modal } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { color } from "react-native-reanimated";
+import imagePath from "../assests/imagePath";
 import Header from "../Components/Header";
 import navigationStrings from "../constants/navigationStrings";
-
-
 
 export default class CartItems extends Component {
     constructor(props) {
@@ -13,7 +12,8 @@ export default class CartItems extends Component {
         this.state = ({
             totalPrice: 0,
             countedItem: 1,
-            isDisable:false
+            isDisable:false,
+            isCheckoutVisible:false
         })
 
     }
@@ -64,9 +64,6 @@ export default class CartItems extends Component {
     
             })
         }
-        
-  
-
     }
 
     _onAddButton = (id) => {
@@ -95,6 +92,22 @@ export default class CartItems extends Component {
     onbackPress = () => {
         const { navigation } = this.props;
         navigation.navigate(navigationStrings.SHOESLIST);
+    }
+
+    _onBuyButton=()=>{
+        this.setState({
+            isCheckoutVisible:true
+        })
+    }
+
+    _onModalClose=()=>{
+        this.setState({
+            isCheckoutVisible:false
+        })
+    }
+
+    _onTrackButton=()=>{
+        
     }
 
     _renderItem = ({ item }) => {
@@ -172,7 +185,7 @@ export default class CartItems extends Component {
 
     render() {
         const { items } = this.props.route.params;
-        const { totalPrice, countedItem } = this.state;
+        const { totalPrice, countedItem,isCheckoutVisible } = this.state;
         return (
             <View style={styles.mainView}>
                 <Header onbackPress={this.onbackPress} />
@@ -182,7 +195,7 @@ export default class CartItems extends Component {
                         <Text style={styles.priceColor}>₹ {totalPrice}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.proccedToBuyButton}>
+                <TouchableOpacity style={styles.proccedToBuyButton} onPress={this._onBuyButton}>
                     <Text>Proceed to Buy</Text>
                 </TouchableOpacity>
                 <FlatList
@@ -190,6 +203,20 @@ export default class CartItems extends Component {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={(item) => this._renderItem(item)}
                 />
+                <Modal transparent visible={isCheckoutVisible} onRequestClose={this._onModalClose} >
+                    <View style={styles.placedOrderModal}> 
+                        <View style={styles.placedOrderView}>
+                            <TouchableOpacity onPress={this._onModalClose}>
+                            <Image source={imagePath.close_icon} style={styles.closeButton} />
+                            </TouchableOpacity>
+                            <Image source={imagePath.right_icon_colored} style={styles.rightSuccesIcon}/>
+                            <Text style={styles.placedOrderMessage}>Your order has been placed successfully!</Text>
+                            <TouchableOpacity style={styles.trackOrderButton} onPress={this._onTrackButton}>
+                                <Text style={styles.trackOrderText}>Track Order</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         )
     }
@@ -275,9 +302,6 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         borderRightWidth: 1,
         paddingRight: 20,
-
-
-
     },
     totalCount: {
         paddingLeft: 20,
@@ -287,7 +311,52 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         borderLeftWidth: 1,
         paddingRight: 20,
+    },
+    placedOrderModal:{
+        flex:1, 
+        backgroundColor:"rgba(0,0,0,0.5)", 
+        justifyContent:"center", 
+        alignItems:"center"
+    },
+    placedOrderView:{
+        width:"93%",
+        height:"50%",
+        backgroundColor:"white",
+},
+closeButton:{
+    height:20,
+    width:20,
+    marginVertical:10,
+    marginHorizontal:10,
+    marginLeft:"auto"
+},
+rightSuccesIcon:{
+    height:45,
+    width:45,
+    borderRadius:23,
+    alignSelf:"center",
+    marginVertical:20
+},
+placedOrderMessage:{
+    fontSize:27,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginVertical:25
+},
+trackOrderButton:{
+    height:60,
+    width:160,
+    alignItems:"center",
+    justifyContent:"center",
+    backgroundColor:"#FF9900",
+    borderRadius:5,
+    alignSelf:"center",
+    marginVertical:50
 
-
-    }
+},
+trackOrderText:{
+    fontSize:18,
+    fontWeight:"bold",
+    color:"white",
+}
 })

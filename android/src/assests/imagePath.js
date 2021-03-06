@@ -22,6 +22,8 @@ export default {
     camera:require('./images/camera_icon.png'),
     system_camera:require('./images/camera-icon.png'),
     system_files:require('./images/files-icon.png'),
+    close_icon:require('./images/close.png'),
+    right_icon_colored:require('./images/right_icon_colored.png'),
 
 
     

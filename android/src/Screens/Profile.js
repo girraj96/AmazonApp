@@ -78,7 +78,7 @@ export default class Profile extends Component {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
-        console.log("You can use the camera");
+
 
 
         const options = {
@@ -105,9 +105,14 @@ export default class Profile extends Component {
             });
           }
         });
-      } else {
+      } 
+      
+      
+      else {
         console.log("Camera permission denied");
       }
+
+
     } catch (error) {
       console.warn(error);
     }

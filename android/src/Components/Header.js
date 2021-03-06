@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, StatusBar, TextInput, Image } from "react-nativ
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ImagePath from "../assests/imagePath"
 
-export default function Header({openDrawer,itemCount,addProductArray,_onCartClick,onbackPress,isDrawerOpen,isCartVisible}) {
+export default function Header(props) {
+    const {openDrawer,itemCount,addProductArray,_onCartClick,onbackPress,isDrawerOpen,isCartVisible}=props;
 
     
     return (
@@ -22,7 +23,7 @@ export default function Header({openDrawer,itemCount,addProductArray,_onCartClic
                     <View style={styles.miceCartIconView}>
                         <Image source={ImagePath.microphone_icon} style={styles.microphoneIcon} resizeMode="contain" />
                         {/* <TouchableOpacity onPress={()=>_onCartClick(addProductArray)}> */}
-                        {isCartVisible&&<TouchableOpacity onPress={()=>_onCartClick()}>
+                        {isCartVisible &&<TouchableOpacity onPress={()=>_onCartClick()}>
                             <Text style={styles.cartCount}>{itemCount}</Text>
                             <Image source={ImagePath.cart_icon} style={styles.cartIcon} resizeMode="contain" />
                         </TouchableOpacity>}
