@@ -3,8 +3,8 @@ import {
   View, Text, TouchableOpacity, ScrollView, SafeAreaView,
   Image, StyleSheet, Modal, PermissionsAndroid, FlatList
 } from "react-native";
-import Header from '../Components/Header';
-import imagePath from '../assests/imagePath';
+import Header from '../../Components/Header';
+import imagePath from '../../assests/imagePath';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 

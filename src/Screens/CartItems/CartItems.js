@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet,Modal } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { color } from "react-native-reanimated";
-import imagePath from "../assests/imagePath";
-import Header from "../Components/Header";
-import navigationStrings from "../constants/navigationStrings";
+import imagePath from "../../assests/imagePath";
+import Header from "../../Components/Header";
+import navigationStrings from "../../constants/navigationStrings";
+import colors from "../../styles/colors";
 
 export default class CartItems extends Component {
     constructor(props) {
@@ -348,7 +349,7 @@ trackOrderButton:{
     width:160,
     alignItems:"center",
     justifyContent:"center",
-    backgroundColor:"#FF9900",
+    backgroundColor:colors.THEME_COLOR,
     borderRadius:5,
     alignSelf:"center",
     marginVertical:50

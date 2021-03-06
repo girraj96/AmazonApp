@@ -7,7 +7,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Routes from './android/src/navigation/Routes';
+import Routes from './src/navigation/Routes';
 
 class App extends Component{
   render(){

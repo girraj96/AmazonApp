@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, TouchableOpacity, SafeAreaView, Image, StyleSheet, FlatList } from "react-native";
-import imagePath from '../assests/imagePath';
-import Categories from '../Components/Categories';
-import Header from '../Components/Header';
-import ShoppingItems from '../Components/ShoppingItems';
-import navigationStrings from '../constants/navigationStrings';
+import imagePath from '../../assests/imagePath';
+import Categories from '../../Components/Categories';
+import Header from '../../Components/Header';
+import ShoppingItems from '../../Components/ShoppingItems';
+import navigationStrings from '../../constants/navigationStrings';
 
 
 export default class Home extends Component {

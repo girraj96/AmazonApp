@@ -1,8 +1,8 @@
 
 import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet,ScrollView } from "react-native";
-import Header from "../Components/Header";
-import navigationStrings from "../constants/navigationStrings";
+import Header from "../../Components/Header";
+import navigationStrings from "../../constants/navigationStrings";
 
 
 
